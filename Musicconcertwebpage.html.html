@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Music Festival 2025 - Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Form Container */
+        .form-wrapper {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.8s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h1 {
+            font-size: 3.5em;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(255,0,255,0.5);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .form-header p {
+            color: #ccc;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .form-header .date {
+            color: #00ffff;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 0;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            z-index: 1;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(255,0,255,0.8);
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(255,0,255,0.8);
+            transform: scale(1.2);
+        }
+
+        .step.completed .step-circle {
+            background: #00ff00;
+            border-color: transparent;
+        }
+
+        .step-label {
+            color: #ccc;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .step.active .step-label {
+            color: #00ffff;
+        }
+
+        /* Form Sections */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form Groups */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        label .required {
+            color: #ff00ff;
+            margin-left: 3px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff00ff;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(255,0,255,0.4);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Radio and Checkbox */
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255,0,255,0.5);
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .radio-option label,
+        .checkbox-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        /* Ticket Selection Cards */
+        .ticket-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .ticket-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .ticket-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .ticket-option.selected {
+            border-color: #ff00ff;
+            background: rgba(255,0,255,0.2);
+            box-shadow: 0 10px 30px rgba(255,0,255,0.5);
+        }
+
+        .ticket-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .ticket-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .ticket-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .ticket-price {
+            font-size: 2em;
+            font-weight: 900;
+            color: #00ffff;
+            margin: 10px 0;
+        }
+
+        .ticket-desc {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        /* Buttons */
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-prev {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-prev:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .btn-next,
+        .btn-submit {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            color: #fff;
+            flex: 1;
+            box-shadow: 0 10px 30px rgba(255,0,255,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-next::before,
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-next:hover::before,
+        .btn-submit:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-next:hover,
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,0,255,0.7);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .success-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .success-message h2 {
+            font-size: 2.5em;
+            color: #00ff00;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 1.3em;
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-details {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .confirmation-details p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .confirmation-details strong {
+            color: #00ffff;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid rgba(255, 0, 0, 0.5);
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-wrapper {
+                padding: 30px 20px;
+            }
+
+            .form-header h1 {
+                font-size: 2.5em;
+            }
+
+            .form-header p {
+                font-size: 1em;
+            }
+
+            .progress-steps {
+                overflow-x: auto;
+            }
+
+            .step-label {
+                font-size: 0.75em;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ticket-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .btn-prev {
+                order: 2;
+            }
+
+            .btn-next,
+            .btn-submit {
+                order: 1;
+            }
+        }
+
+        /* Custom File Upload */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .file-upload-label {
+            border-color: #ff00ff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .file-name {
+            color: #00ffff;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="form-wrapper">
+        <div class="form-header">
+            <h1>🎵 SUMMER BEATS 2025 🎵</h1>
+            <p>Official Festival Registration Form</p>
+            <p class="date">📅 July 15-17, 2025 | 📍 Riverside Park, Mumbai</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-line" id="progressLine"></div>
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Personal Info</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Ticket Selection</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Preferences</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Review</div>
+            </div>
+        </div>
+
+        <form id="registrationForm">
+            <!-- Step 1: Personal Information -->
+            <div class="form-section active" data-section="1">
+                <h2 class="section-title">👤 Personal Information</h2>
+                <div class="error-message" id="error1"></div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                            <option value="prefer-not">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Address <span class="required">*</span></label>
+                    <textarea id="address" name="address" placeholder="Enter your complete address" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City <span class="required">*</span></label>
+                        <input type="text" id="city" name="city" placeholder="Enter city" required>
+                    </div>
+                    <div class="form-group">
+                        <label>PIN Code <span class="required">*</span></label>
+                        <input type="text" id="pincode" name="pincode" placeholder="Enter PIN code" required>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-next" onclick="nextStep(1)">
+                        <span>Next Step →</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Ticket Selection -->
+            <div class="form-section" data-section="2">
+                <h2 class="section-title">🎫 Ticket Selection</h2>
+                <div class="error-message" id="error2"></div>
+
+                <div class="form-group">
+                    <label>Choose Your Ticket Type <span class="required">*</span></label>
+                    <div class="ticket-selection">
+                        <div class="ticket-option" onclick="selectTicket(this, 'single', 2999)">
+                            <input type="radio" name="ticketType" value="single" required>
+                            <div class="ticket-icon">🎵</div>
+                            <div class="ticket-name">Single Day</div>
+                            <div class="ticket-price">₹2,999</div>
+                            <div class="ticket-desc">1 Day Access</div>
+                        </div>
+                        <div class="ticket-option" onclick="selectTicket(this, 'weekend', 4999)">
+                            <input type="radio" name="ticketType" value="weekend" required>
+                            <div class="ticket-icon">🎉</div>
+                            <div class="ticket-name">Weekend Pass</div>
+                            <div class="ticket-price">₹4,999</div>
+                            <div class="ticket-desc">2 Days Access</div>
+                        </div>
+                        <div class="ticket-option" onclick="selectTicket(this, 'full', 6999)">
+                            <input type="radio" name="ticketType" value="full" required>
+                            <div class="ticket-icon">🔥</div>
+                            <div class="ticket-name">Full Festival</div>
+                            <div class="ticket-price">₹6,999</div>
+                            <div class="ticket-desc">All 3 Days</div>
+                        </div>
+                        <div class="ticket-option" onclick="selectTicket(this, 'vip', 9999)">
+                            <input type="radio" name="ticketType" value="vip" required>
+                            <div class="ticket-icon">⭐</div>
+                            <div class="ticket-name">VIP Access</div>
+                            <div class="ticket-price">₹9,999</div>
+                            <div class="ticket-desc">Premium Experience</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Number of Tickets <span class="required">*</span></label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Amount</label>
+                        <input type="text" id="totalAmount" name="totalAmount" value="₹0" readonly style="font-weight: 700; font-size: 1.3em; color: #00ff00;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Days You'll Attend</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friday" name="days" value="friday">
+                            <label for="friday">🔥 Friday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="saturday" name="days" value="saturday">
+                            <label for="saturday">✨ Saturday</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="sunday" name="days" value="sunday">
+                            <label for="sunday">🎆 Sunday</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(2)">
+                        <span>← Previous</span>
+                    </button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(2)">
+                        <span>Next Step →</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Preferences -->
+            <div class="form-section" data-section="3">
+                <h2 class="section-title">🎨 Preferences & Extras</h2>
+                <div class="error-message" id="error3"></div>
+
+                <div class="form-group">
+                    <label>Complimentary T-Shirt Size</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="size-s" name="tshirtSize" value="S">
+                            <label for="size-s">S</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="size-m" name="tshirtSize" value="M">
+                            <label for="size-m">M</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="size-l" name="tshirtSize" value="L">
+                            <label for="size-l">L</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="size-xl" name="tshirtSize" value="XL">
+                            <label for="size-xl">XL</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="size-xxl" name="tshirtSize" value="XXL">
+                            <label for="size-xxl">XXL</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Favorite Music Genre</label>
+                    <select id="genre" name="genre">
+                        <option value="">Select your favorite genre</option>
+                        <option value="edm">🎹 Electronic / EDM</option>
+                        <option value="rock">🎸 Rock / Alternative</option>
+                        <option value="pop">🎵 Pop / Indie</option>
+                        <option value="jazz">🎺 Jazz / Fusion</option>
+                        <option value="hiphop">🎤 Hip-Hop / Rap</option>
+                        <option value="other">🎶 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select id="source" name="source">
+                        <option value="">Select source</option>
+                        <option value="social">📱 Social Media</option>
+                        <option value="friend">👥 Friend / Family</option>
+                        <option value="website">🌐 Website</option>
+                        <option value="ad">📢 Advertisement</option>
+                        <option value="other">📋 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload ID Proof (Optional)</label>
+                    <div class="file-upload">
+                        <input type="file
